@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ElementNameTest;assembly=ElementNameTest"
+             x:Class="ElementNameTest.Page2"
+             x:Name="ThisPage">
+
+    <ContentPage.BindingContext> 
+        <local:Page2ViewModel/>
+    </ContentPage.BindingContext>
+ 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:Array Type="{x:Type x:String}" x:Key="Phones">
+                <x:String>iPhone 7</x:String>
+                <x:String>Samsung Galaxy S7</x:String>
+                <x:String>HP Elite x3</x:String>
+            </x:Array>
+
+            <DataTemplate x:Key="templateOne">
+            <ViewCell>
+                <StackLayout IsVisible="{Binding BindingContext.IsLayoutVisible, Source={x:Reference ThisPage}}">
+                    <Label Text="Unrelated text"></Label>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+
+            <local:SimpleTemplateSelector x:Key="simpleTemplateSelector"
+                IsTemplateOne="{StaticResource templateOne}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ListView ItemsSource="{StaticResource Phones}" 
+                  ItemTemplate="{StaticResource simpleTemplateSelector}">
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>
